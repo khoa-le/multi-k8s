@@ -1,0 +1,15 @@
+sudo: required
+services: 
+  - docker
+
+before_install:
+  - docker build -t khoa-le/react-test -f ./client/Dockerfile.env ./client
+
+script: 
+  - docker run -t khoa-le/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t khoa-le/multi-client ./client
+  - docker build -t khoa-le/multi-nginx ./nginx
+  - docker build -t khoa-le/multi-server ./server
+  - docker build -t khoa-le/multi-woker ./worker
