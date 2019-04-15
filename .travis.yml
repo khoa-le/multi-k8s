@@ -13,3 +13,12 @@ after_success:
   - docker build -t khoa-le/multi-nginx ./nginx
   - docker build -t khoa-le/multi-server ./server
   - docker build -t khoa-le/multi-woker ./worker
+
+  #Login to docker hub
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  #Take those images and push them to docker hub
+  - docker push khoa-le/multi-client
+  - docker push khoa-le/multi-nginx
+  - docker push khoa-le/multi-server
+  - docker push khoa-le/multi-worker
+
